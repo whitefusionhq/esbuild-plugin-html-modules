@@ -1,0 +1,19 @@
+{
+  "name": "esbuild-plugin-html-modules",
+  "version": "0.1.0",
+  "description": "An esbuild plugin to load HTML modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "node example/esbuild.config.js"
+  },
+  "repository": "git@github.com:whitefusionhq/esbuild-plugin-html-modules.git",
+  "author": "Jared White <jared@jaredwhite.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/whitefusionhq/esbuild-plugin-html-modules/issues"
+  },
+  "homepage": "https://github.com/whitefusionhq/esbuild-plugin-html-modules#readme",
+  "devDependencies": {
+    "esbuild": "^0.14.39"
+  }
+}
