@@ -38,7 +38,7 @@ You can also pass a specific filter in if you wish to support only specific exte
   ]
 ```
 
-Now you'll be able to import HTML modules. Take a peek at the [files in the `example` folder] for an example of how this could work.
+Now you'll be able to import HTML modules. Take a peek at the [files in the `example` folder](https://github.com/whitefusionhq/esbuild-plugin-html-modules/tree/main/example) for an example of how this could work.
 
 ## Contributing
 
