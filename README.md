@@ -22,8 +22,8 @@ const htmlModulesPlugin = require('esbuild-plugin-html-modules')
 
 esbuild.build({
   bundle: true,
-  entryPoints: ['example/main.js'],
-  outfile: 'example/out.js',
+  entryPoints: ['src/index.js'],
+  outfile: 'dist/index.js',
   plugins: [
     htmlModulesPlugin()
   ]
@@ -38,7 +38,15 @@ You can also pass a specific filter in if you wish to support only specific exte
   ]
 ```
 
-Now you'll be able to import HTML modules. Take a peek at the [files in the `example` folder](https://github.com/whitefusionhq/esbuild-plugin-html-modules/tree/main/example) for an example of how this could work.
+Now you'll be able to import HTML modules. Take a peek at the [files in the `test/fixture` folder](https://github.com/whitefusionhq/esbuild-plugin-html-modules/tree/main/test/fixture) for an example of how this could work.
+
+## Testing
+
+Run:
+
+```sh
+npm run test
+```
 
 ## Contributing
 
