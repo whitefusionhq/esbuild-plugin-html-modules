@@ -16,14 +16,24 @@ module.exports = (options = {}) => ({
 
       const root = parse(results)
 
-      root.childNodes.forEach(node => {
-        if (node.tagName === "SCRIPT") {
-          if (node.getAttribute("type") === "module") {
-            scripts.push(node.rawText)
-          }
-          removeNodes.push(node)
+      const scriptTags = root.getElementsByTagName("script")
+      scriptTags.forEach(node => {
+        if (node.getAttribute("type") === "module") {
+          scripts.push(node.rawText)
         }
+        removeNodes.push(node)
       })
+
+      const styleTags = root.getElementsByTagName("style")
+
+      await Promise.all(
+        styleTags.map(async (styleTag) => {
+          if (options.transformStyles) {
+            const transformedCSS = await options.transformStyles(styleTag.textContent, { filePath: args.path })
+            styleTag.textContent = transformedCSS
+          }
+        })
+      )
 
       const scriptContent = scripts.join("")
       removeNodes.forEach(node => node.remove())

@@ -25,3 +25,9 @@ test('exported template', (t) => {
   assert.strictEqual(testing.HelloWorld.children[1].textContent, 'Nice to meet you! \'"` return');
   assert.strictEqual(testing.HelloWorld.children[2].textContent, "More html nodes!");
 });
+
+test('processed style tag', (t) => {
+  const testing = processBundle()
+
+  assert.strictEqual(testing.HelloWorld.children[3].textContent, "\n      body .and .soul {\n        color: red;\n      }\n")
+});

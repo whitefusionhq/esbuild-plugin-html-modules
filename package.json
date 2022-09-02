@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-html-modules",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An esbuild plugin to load HTML modules",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,10 @@
   "homepage": "https://github.com/whitefusionhq/esbuild-plugin-html-modules#readme",
   "devDependencies": {
     "esbuild": "^0.14.39",
-    "jsdom": "^20.0.0"
+    "jsdom": "^20.0.0",
+    "postcss": "^8.4.16",
+    "postcss-load-config": "^4.0.1",
+    "postcss-preset-env": "^7.8.0"
   },
   "dependencies": {
     "node-html-parser": "^5.4.2"
