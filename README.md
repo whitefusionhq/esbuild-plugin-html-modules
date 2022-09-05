@@ -1,5 +1,9 @@
 # esbuild-plugin-html-modules
 
+[![npm][npm]][npm-url]
+[![CI Test](https://github.com/whitefusionhq/esbuild-plugin-html-modules/actions/workflows/ci.yml/badge.svg)](https://github.com/whitefusionhq/esbuild-plugin-html-modules/actions/workflows/ci.yml)
+
+
 An esbuild plugin to load HTML Modules. [This is a proposed spec](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/html-modules-explainer.md) defined here by [@dandclark](https://github.com/dandclark) which would allow HTML files to be exported and importable as ES modules where the HTML itself is transformed into an exported HTML template and a `<script type="module">` tag is run as the JavaScript of the module. The template is available from inside the module script code via `import.meta.document`, and externally as the default ES export of the file.
 
 An HTML module could look like this:
@@ -109,3 +113,6 @@ npm run test
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create a new Pull Request
+
+[npm]: https://img.shields.io/npm/v/esbuild-plugin-html-modules.svg
+[npm-url]: https://npmjs.com/package/esbuild-plugin-html-modules
