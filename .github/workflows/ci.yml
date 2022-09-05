@@ -21,5 +21,8 @@ jobs:
         node-version: '18'
         cache: 'npm'
 
+    - name: Install packages
+      run: npm install
+
     - name: Run tests
       run: npm run test
