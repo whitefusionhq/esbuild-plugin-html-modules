@@ -24,12 +24,24 @@ module.exports = (options = {}) => ({
         removeNodes.push(node)
       })
 
+      let globalCSS = ""
+      if (options.experimental?.extractGlobalStyles) {
+        const templateTags = root.querySelectorAll("template[global-style]")
+        templateTags.forEach(templateTag => {
+          const styleTag = templateTag.querySelector("style")
+          if (styleTag) {
+            globalCSS += `${styleTag.textContent}\n`
+          }
+          templateTag.remove()
+        })
+      }
+
       const styleTags = root.getElementsByTagName("style")
 
       await Promise.all(
         styleTags.map(async (styleTag) => {
-          if (options.transformStyles) {
-            const transformedCSS = await options.transformStyles(styleTag.textContent, { filePath: args.path })
+          if (options.experimental?.transformStyles) {
+            const transformedCSS = await options.experimental.transformStyles(styleTag.textContent, { filePath: args.path })
             styleTag.textContent = transformedCSS
           }
         })
@@ -40,7 +52,9 @@ module.exports = (options = {}) => ({
 
       const htmlFragment = root.toString()
 
-      const wrapper = `
+      let wrapper = globalCSS.length > 0 ? `import "data:text/css,${encodeURI(globalCSS)}"\n` : ""
+
+      wrapper += `
         var import_meta_document = new DocumentFragment()
         const htmlFrag = "<body>" + ${JSON.stringify(htmlFragment)} + "</body>"
         const fragment = new DOMParser().parseFromString(htmlFrag, 'text/html')

@@ -14,12 +14,15 @@ esbuild.build({
   outfile: 'test/fixture/out.js',
   plugins: [
     htmlModulesPlugin({
-      transformStyles: async (css, { filePath }) => {
-        const postCssConfig = await postcssrc()
-        const postCssProcessor = postcss([...postCssConfig.plugins])
+      experimental: {
+        extractGlobalStyles: true,
+        transformStyles: async (css, { filePath }) => {
+          const postCssConfig = await postcssrc()
+          const postCssProcessor = postcss([...postCssConfig.plugins])
 
-        const results = await postCssProcessor.process(css, { ...postCssConfig.options, from: filePath })
-        return results.css
+          const results = await postCssProcessor.process(css, { ...postCssConfig.options, from: filePath })
+          return results.css
+        }
       }
     })
   ]

@@ -3,6 +3,8 @@
 <p>Nice to meet you! '"` return</p>
 
 <script type="module">
+//  import something from './external.css' assert { type: 'css' } // TODO: support assert imports
+
   export const howdy = () => {
     return `howdy ${"f"}riend!`
   }
@@ -25,3 +27,18 @@
     } 
   }
 </style>
+
+<template global-style>
+  <style>
+    html {
+      color: green;
+    }
+  </style>
+</template>
+<template global-style>
+  <style>
+    body {
+      color: orange;
+    }
+  </style>
+</template>

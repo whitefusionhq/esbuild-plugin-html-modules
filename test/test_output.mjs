@@ -13,6 +13,10 @@ function processBundle() {
   return testing
 }
 
+function readGlobalCSS() {
+  return readFileSync("test/fixture/out.css").toString()
+}
+
 test('function within the module script', (t) => {
   const testing = processBundle()
   assert.strictEqual(testing.howdy(), "howdy friend!");
@@ -31,3 +35,12 @@ test('processed style tag', (t) => {
 
   assert.strictEqual(testing.HelloWorld.children[3].textContent, "\n      body .and .soul {\n        color: red;\n      }\n")
 });
+
+test('global CSS bundled', (t) => {
+  const css = readGlobalCSS()
+
+  assert.match(css, /html/)
+  assert.match(css, /body/)
+  assert.match(css, /color: green/)
+  assert.match(css, /color: orange/)
+})
