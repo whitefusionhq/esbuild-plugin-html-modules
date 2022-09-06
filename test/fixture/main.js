@@ -1,4 +1,4 @@
-import HelloWorld, { howdy, yo } from "./hello-world.html"
+import HelloWorld, { howdy, yo } from "./hello-world.html" assert { type: "html" }
 
 window.testing = {
   HelloWorld,
