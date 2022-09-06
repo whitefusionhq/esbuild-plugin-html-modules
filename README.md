@@ -25,7 +25,7 @@ And you could import it like this:
 ```js
 // in some JS file:
 
-import HelloWorld, { hello } from "src/hello-world.html"
+import HelloWorld, { hello } from "src/hello-world.html" assert { type: "html" }
 
 console.log(hello())
 
