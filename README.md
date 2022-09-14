@@ -106,7 +106,7 @@ If you define a `transformLocalStyles` function, then any local style tag contai
 
 ## Bundling Lifecycle
 
-As part of transforming local styles, you can optionally export those transformed styles into "sidecar" CSS output file. This can be helpful if you would like another process to use those styles in SSR. By setting the `exportLocalStylesExtension` option, a file with the provided extension will be saved right alongside the HTML module.
+As part of transforming local styles, you can optionally export those transformed styles into "sidecar" CSS output file. This can be helpful if you would like another process to use those styles in SSR. By setting the `exportLocalStylesExtension` option, a file with the provided extension will be saved right alongside the HTML module. **Note:** it's highly recommended you add that extension to your `.gitignore` file as they're purely build-time automated.
 
 You can also specify a filename filter for HTML modules you do _not_ wish to include in esbuild's bundled JS output. This will effectively set their exported default template to a blank fragment and ignore all script tags. You would want to do this for HTML modules which are intended purely for SSR and are not designed for inclusion in a frontend JS bundle. In the `skipBundlingFilter: /\.tmpl\.html$/` example above, any HTML module ending in the double extension `.tmpl.html` will be skipped in this fashion.
 
