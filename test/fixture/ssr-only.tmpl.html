@@ -1,0 +1,19 @@
+<p>This should all get completely ignored!</p>
+
+<script type="module">
+  This should also get ignored!
+</script>
+
+<style>
+  .nest {
+    & .me {
+      --only-this-will-work: var(--value);
+    }
+  }
+</style>
+
+<style scope="global">
+  :root {
+    --root-of-the-matter: var(--indeed);
+  }
+</style>

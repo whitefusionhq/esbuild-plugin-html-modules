@@ -46,4 +46,14 @@ test('global CSS bundled', (t) => {
 
   assert.match(css, /tag-name > h1/)
   assert.match(css, /tag-name > p\[slot=here\]/)
+
+  assert.match(css, /--root-of-the-matter: var\(--indeed\)/)
+})
+
+test('ssr only output', (t) => {
+  const testing = processBundle()
+  const sidecarCSS = readFileSync("test/fixture/ssr-only.tmpl.css-local").toString()
+
+  assert.match(sidecarCSS, /\.nest \.me/)
+  assert.equal(testing.Nothing.children.length, 0)
 })

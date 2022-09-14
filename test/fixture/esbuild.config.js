@@ -17,13 +17,15 @@ esbuild.build({
       experimental: {
         extractGlobalStyles: true,
         extractScopedStyles: true,
+        exportLocalStylesExtension: "css-local",
+        skipBundlingFilter: /\.tmpl\.html$/,
         transformLocalStyles: async (css, { filePath }) => {
           const postCssConfig = await postcssrc()
           const postCssProcessor = postcss([...postCssConfig.plugins])
 
           const results = await postCssProcessor.process(css, { ...postCssConfig.options, from: filePath })
           return results.css
-        }
+        },
       }
     })
   ]

@@ -83,6 +83,8 @@ htmlModulesPlugin({
   experimental: {
     extractGlobalStyles: true,
     extractScopedStyles: true,
+    exportLocalStylesExtension: "css-local",
+    skipBundlingFilter: /\.tmpl\.html$/,
     transformLocalStyles: async (css, { filePath }) => {
       const postCssConfig = await postcssrc()
       const postCssProcessor = postcss([...postCssConfig.plugins])
@@ -101,6 +103,14 @@ If you define `extractGlobalStyles: true`, then any `style` tag featuring a `sco
 If you define `extractScopedStyles: true`, then any `style` tag featuring a `scope="tag-name-here"` attribute will have those styles extracted out, transformed so that selectors such as `:host` are replaced by the scoped tag name, and included in esbuild's CSS bundle output. This is to facilitate shadow DOM-like styling for custom elements which use light DOM only. Note that these transformations are provided by the [enhance-style-transform](https://github.com/enhance-dev/enhance-style-transform) package. [Additional documentation is available here.](https://github.com/enhance-dev/enhance-style-transform#ssr-transformations)
 
 If you define a `transformLocalStyles` function, then any local style tag contained within your HTML (not explicitly scoped) will have its contents transformed by the function. Above you can see this done using PostCSS, but you could use another processor such as Sass if you prefer. This is useful for style tags which get included in shadow DOM templates (and you wouldn't want to include those styles in the CSS bundle).
+
+## Bundling Lifecycle
+
+As part of transforming local styles, you can optionally export those transformed styles into "sidecar" CSS output file. This can be helpful if you would like another process to use those styles in SSR. By setting the `exportLocalStylesExtension` option, a file with the provided extension will be saved right alongside the HTML module.
+
+You can also specify a filename filter for HTML modules you do _not_ wish to include in esbuild's bundled JS output. This will effectively set their exported default template to a blank fragment and ignore all script tags. You would want to do this for HTML modules which are intended purely for SSR and are not designed for inclusion in a frontend JS bundle. In the `skipBundlingFilter: /\.tmpl\.html$/` example above, any HTML module ending in the double extension `.tmpl.html` will be skipped in this fashion.
+
+**Note:** this does _not_ skip the styles processing. Any local style tags will still be transformed if those options have been set, and any scoped or global styles will be extracted if those options have been set.
 
 ## Testing
 
