@@ -28,17 +28,21 @@
   }
 </style>
 
-<template global-style>
-  <style>
-    html {
-      color: green;
-    }
-  </style>
-</template>
-<template global-style>
-  <style>
-    body {
-      color: orange;
-    }
-  </style>
-</template>
+<style scope="global">
+  html {
+    color: green;
+  }
+</style>
+
+<style scope="global">
+  body {
+    color: orange;
+  }
+</style>
+
+<style scope="tag-name">
+  :host > h1 {
+    color: purple;
+  }
+  :host > p::slotted([slot=here]) { color:red; }
+</style>

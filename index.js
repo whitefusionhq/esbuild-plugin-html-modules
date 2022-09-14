@@ -26,13 +26,28 @@ module.exports = (options = {}) => ({
 
       let globalCSS = ""
       if (options.experimental?.extractGlobalStyles) {
-        const templateTags = root.querySelectorAll("template[global-style]")
-        templateTags.forEach(templateTag => {
-          const styleTag = templateTag.querySelector("style")
-          if (styleTag) {
-            globalCSS += `${styleTag.textContent}\n`
-          }
-          templateTag.remove()
+        root.querySelectorAll("style[scope=global]").forEach(styleTag => {
+          globalCSS += `${styleTag.textContent}\n`
+          styleTag.remove()
+        })
+      }
+
+      if (options.experimental?.extractScopedStyles) {
+        const styleTransform = await import("@enhance/enhance-style-transform")
+        const transform = styleTransform.default
+
+        root.querySelectorAll("style[scope]").forEach(styleTag => {
+          const scope = styleTag.getAttribute("scope")
+          const styles = styleTag.textContent
+
+          styleTag.textContent = transform({
+            tagName: scope,
+            context: 'markup',
+            raw: styles
+          })
+
+          globalCSS += `${styleTag.textContent}\n`
+          styleTag.remove()
         })
       }
 
@@ -40,8 +55,8 @@ module.exports = (options = {}) => ({
 
       await Promise.all(
         styleTags.map(async (styleTag) => {
-          if (options.experimental?.transformStyles) {
-            const transformedCSS = await options.experimental.transformStyles(styleTag.textContent, { filePath: args.path })
+          if (options.experimental?.transformLocalStyles) {
+            const transformedCSS = await options.experimental.transformLocalStyles(styleTag.textContent, { filePath: args.path })
             styleTag.textContent = transformedCSS
           }
         })

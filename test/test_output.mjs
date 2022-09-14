@@ -43,4 +43,7 @@ test('global CSS bundled', (t) => {
   assert.match(css, /body/)
   assert.match(css, /color: green/)
   assert.match(css, /color: orange/)
+
+  assert.match(css, /tag-name > h1/)
+  assert.match(css, /tag-name > p\[slot=here\]/)
 })

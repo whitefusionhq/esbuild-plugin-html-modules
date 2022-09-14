@@ -16,7 +16,8 @@ esbuild.build({
     htmlModulesPlugin({
       experimental: {
         extractGlobalStyles: true,
-        transformStyles: async (css, { filePath }) => {
+        extractScopedStyles: true,
+        transformLocalStyles: async (css, { filePath }) => {
           const postCssConfig = await postcssrc()
           const postCssProcessor = postcss([...postCssConfig.plugins])
 
