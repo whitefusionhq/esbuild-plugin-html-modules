@@ -11,6 +11,7 @@ module.exports = (options = {}) => ({
     // Process .html files as ES modules
     build.onLoad({ filter }, async (args) => {
       const results = await fs.readFile(args.path, "utf8")
+      const ignoreSSROnly = options.experimental?.ignoreSSROnly || false
 
       let scripts = []
       let removeNodes = []
@@ -19,7 +20,7 @@ module.exports = (options = {}) => ({
 
       const scriptTags = root.getElementsByTagName("script")
       scriptTags.forEach((node) => {
-        if (node.getAttribute("type") === "module") {
+        if (node.getAttribute("type") === "module" && !(ignoreSSROnly && node.hasAttribute("data-ssr-only"))) {
           scripts.push(node.rawText)
         }
         removeNodes.push(node)
@@ -67,6 +68,7 @@ module.exports = (options = {}) => ({
               styleExports += transformedCSS
             }
           }
+          if (styleTag.hasAttribute("data-ssr-only")) styleTag.remove()
         })
       )
       if (styleExports.length > 0) {
@@ -80,6 +82,9 @@ module.exports = (options = {}) => ({
         )
       }
 
+      if (ignoreSSROnly) {
+        root.querySelectorAll("[data-ssr-only]").forEach(node => removeNodes.push(node))
+      }
       const scriptContent = scripts.join("")
       removeNodes.forEach((node) => node.remove())
 
@@ -88,8 +93,9 @@ module.exports = (options = {}) => ({
       let wrapper = globalCSS.length > 0 ? `import "data:text/css,${encodeURI(globalCSS)}"\n` : ""
 
       if (
-        options.experimental?.skipBundlingFilter &&
-        args.path.match(options.experimental.skipBundlingFilter)
+        htmlFragment.trim().length === 0 ||
+        (options.experimental?.skipBundlingFilter &&
+          args.path.match(options.experimental.skipBundlingFilter))
       ) {
         // we'll export nothing
         wrapper += `

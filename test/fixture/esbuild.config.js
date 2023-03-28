@@ -18,7 +18,7 @@ esbuild.build({
         extractGlobalStyles: true,
         extractScopedStyles: true,
         exportLocalStylesExtension: "css-local",
-        skipBundlingFilter: /\.tmpl\.html$/,
+        ignoreSSROnly: true,
         transformLocalStyles: async (css, { filePath }) => {
           const postCssConfig = await postcssrc()
           const postCssProcessor = postcss([...postCssConfig.plugins])

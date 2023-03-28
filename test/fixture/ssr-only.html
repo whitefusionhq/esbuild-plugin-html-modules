@@ -1,10 +1,12 @@
-<p>This should all get completely ignored!</p>
+<template data-ssr-only>
+  <p>This should all get completely ignored!</p>
+</template>
 
-<script type="module">
+<script type="module" data-ssr-only>
   This should also get ignored!
 </script>
 
-<style>
+<style data-ssr-only>
   .nest {
     & .me {
       --only-this-will-work: var(--value);

@@ -52,7 +52,7 @@ test('global CSS bundled', (t) => {
 
 test('ssr only output', (t) => {
   const testing = processBundle()
-  const sidecarCSS = readFileSync("test/fixture/ssr-only.tmpl.css-local").toString()
+  const sidecarCSS = readFileSync("test/fixture/ssr-only.css-local").toString()
 
   assert.match(sidecarCSS, /\.nest \.me/)
   assert.equal(testing.Nothing.children.length, 0)

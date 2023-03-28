@@ -84,7 +84,7 @@ htmlModulesPlugin({
     extractGlobalStyles: true,
     extractScopedStyles: true,
     exportLocalStylesExtension: "css-local",
-    skipBundlingFilter: /\.tmpl\.html$/,
+    ignoreSSROnly: true,
     transformLocalStyles: async (css, { filePath }) => {
       const postCssConfig = await postcssrc()
       const postCssProcessor = postcss([...postCssConfig.plugins])
@@ -108,7 +108,7 @@ If you define a `transformLocalStyles` function, then any local style tag contai
 
 As part of transforming local styles, you can optionally export those transformed styles into "sidecar" CSS output file. This can be helpful if you would like another process to use those styles in SSR. By setting the `exportLocalStylesExtension` option, a file with the provided extension will be saved right alongside the HTML module. **Note:** it's highly recommended you add that extension to your `.gitignore` file as they're purely build-time automated.
 
-You can also specify a filename filter for HTML modules you do _not_ wish to include in esbuild's bundled JS output. This will effectively set their exported default template to a blank fragment and ignore all script tags. You would want to do this for HTML modules which are intended purely for SSR and are not designed for inclusion in a frontend JS bundle. In the `skipBundlingFilter: /\.tmpl\.html$/` example above, any HTML module ending in the double extension `.tmpl.html` will be skipped in this fashion.
+For controlling the bundling characteristics of "split" components where some (or all!) functionality is server-only, you can set the `ignoreSSROnly` option to `true`. This will then filter out (aka remove) any elements in the module with a `data-ssr-only` attribute present. For example, you could have a `template` tag, `script` tag, and `style` tag which _all_ feature `data-ssr-only`, and therefore the bundled module would export a blank fragment. This technique can work well for "resumable" components which don't require access to the full module template at client-side runtime.
 
 **Note:** this does _not_ skip the styles processing. Any local style tags will still be transformed if those options have been set, and any scoped or global styles will be extracted if those options have been set.
 
