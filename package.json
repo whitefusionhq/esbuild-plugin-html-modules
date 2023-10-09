@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-html-modules",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "An esbuild plugin to load HTML modules",
   "main": "index.js",
   "scripts": {
