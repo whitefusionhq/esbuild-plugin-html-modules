@@ -90,7 +90,10 @@ module.exports = (options = {}) => ({
 
       const htmlFragment = root.toString()
 
-      let wrapper = globalCSS.length > 0 ? `import "data:text/css,${encodeURI(globalCSS)}"\n` : ""
+      // strip out comments or the data URLs mess up esbuild
+      let wrapper = globalCSS.length > 0 ? `import "data:text/css,${
+        encodeURI(globalCSS.replace(/\/\*[\s\S]*?\*\//g, ""))
+      }"\n` : ""
 
       if (
         htmlFragment.trim().length === 0 ||

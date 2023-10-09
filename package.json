@@ -4,6 +4,9 @@
   "description": "An esbuild plugin to load HTML modules",
   "main": "index.js",
   "scripts": {
+    "release:patch": "npm version patch && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor && npm publish && git push --follow-tags",
+    "release:major": "npm version major && npm publish && git push --follow-tags",
     "test:fixture": "rm -f test/fixture/out.* && node test/fixture/esbuild.config.js",
     "test": "npm run test:fixture && node --test test/*.mjs"
   },
