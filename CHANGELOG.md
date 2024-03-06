@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Upcoming
 
+## [0.7.2](https://github.com/whitefusionhq/esbuild-plugin-html-modules/compare/v0.7.0...v0.7.1) - 2024-13-06
+
+- Fix bug where the `ignoreSSROnly` option wasn't including client-side scripts when the HTML was totally blank
+
 ## [0.7.1](https://github.com/whitefusionhq/esbuild-plugin-html-modules/compare/v0.7.0...v0.7.1) - 2023-10-08
 
 - Strip out CSS comments (they cause data URL bundling issues in esbuild)

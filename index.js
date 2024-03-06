@@ -20,7 +20,10 @@ module.exports = (options = {}) => ({
 
       const scriptTags = root.getElementsByTagName("script")
       scriptTags.forEach((node) => {
-        if (node.getAttribute("type") === "module" && !(ignoreSSROnly && node.hasAttribute("data-ssr-only"))) {
+        if (
+          node.getAttribute("type") === "module" &&
+          !(ignoreSSROnly && node.hasAttribute("data-ssr-only"))
+        ) {
           scripts.push(node.rawText)
         }
         removeNodes.push(node)
@@ -83,7 +86,7 @@ module.exports = (options = {}) => ({
       }
 
       if (ignoreSSROnly) {
-        root.querySelectorAll("[data-ssr-only]").forEach(node => removeNodes.push(node))
+        root.querySelectorAll("[data-ssr-only]").forEach((node) => removeNodes.push(node))
       }
       const scriptContent = scripts.join("")
       removeNodes.forEach((node) => node.remove())
@@ -91,14 +94,14 @@ module.exports = (options = {}) => ({
       const htmlFragment = root.toString()
 
       // strip out comments or the data URLs mess up esbuild
-      let wrapper = globalCSS.length > 0 ? `import "data:text/css,${
-        encodeURI(globalCSS.replace(/\/\*[\s\S]*?\*\//g, ""))
-      }"\n` : ""
+      let wrapper =
+        globalCSS.length > 0
+          ? `import "data:text/css,${encodeURI(globalCSS.replace(/\/\*[\s\S]*?\*\//g, ""))}"\n`
+          : ""
 
       if (
-        htmlFragment.trim().length === 0 ||
-        (options.experimental?.skipBundlingFilter &&
-          args.path.match(options.experimental.skipBundlingFilter))
+        options.experimental?.skipBundlingFilter &&
+        args.path.match(options.experimental.skipBundlingFilter)
       ) {
         // we'll export nothing
         wrapper += `
@@ -107,10 +110,15 @@ module.exports = (options = {}) => ({
       } else {
         wrapper += `
           var import_meta_document = new DocumentFragment()
-          const htmlFrag = "<body>" + ${JSON.stringify(htmlFragment)} + "</body>"
-          const fragment = new DOMParser().parseFromString(htmlFrag, 'text/html')
-          import_meta_document.append(...fragment.body.childNodes)
-
+        `
+        if (htmlFragment.trim().length !== 0) {
+          wrapper += `
+            const htmlFrag = "<body>" + ${JSON.stringify(htmlFragment)} + "</body>"
+            const fragment = new DOMParser().parseFromString(htmlFrag, 'text/html')
+            import_meta_document.append(...fragment.body.childNodes)
+          `
+        }
+        wrapper += `
           ${scriptContent.replace(/import[\s]*?\.meta[\s]*?\.document/g, "import_meta_document")}
           export default import_meta_document
         `

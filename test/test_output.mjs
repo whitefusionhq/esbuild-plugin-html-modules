@@ -56,4 +56,5 @@ test('ssr only output', (t) => {
 
   assert.match(sidecarCSS, /\.nest \.me/)
   assert.equal(testing.Nothing.children.length, 0)
+  assert.equal(testing.clientSide, "yup")
 })

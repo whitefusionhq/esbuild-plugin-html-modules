@@ -3,7 +3,8 @@
 </template>
 
 <script type="module" data-ssr-only>
-  This should also get ignored!
+  // This should also get ignored!
+  export const clientSide = "nope"
 </script>
 
 <style data-ssr-only>
@@ -19,3 +20,8 @@
     --root-of-the-matter: var(--indeed);
   }
 </style>
+
+<script type="module">
+  // This will end up in the final bundle
+  export const clientSide = "yup"
+</script>
