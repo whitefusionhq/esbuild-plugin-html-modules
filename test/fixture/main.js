@@ -1,5 +1,5 @@
-import HelloWorld, { howdy, yo } from "./hello-world.html" assert { type: "html" }
-import Nothing, { clientSide } from "./ssr-only.html" assert { type: "html" }
+import HelloWorld, { howdy, yo } from "./hello-world.html" with { type: "html" }
+import Nothing, { clientSide } from "./ssr-only.html" with { type: "html" }
 
 window.testing = {
   HelloWorld,

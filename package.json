@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/whitefusionhq/esbuild-plugin-html-modules#readme",
   "devDependencies": {
-    "esbuild": "^0.14.39",
+    "esbuild": "^0.20.1",
     "jsdom": "^20.0.0",
     "postcss": "^8.4.16",
     "postcss-load-config": "^4.0.1",
