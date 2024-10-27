@@ -25,7 +25,6 @@
     "postcss-preset-env": "^7.8.0"
   },
   "dependencies": {
-    "@enhance/enhance-style-transform": "^0.0.1",
     "node-html-parser": "^5.4.2"
   },
   "prettier": {

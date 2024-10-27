@@ -82,7 +82,6 @@ const postcss = require("postcss")
 htmlModulesPlugin({
   experimental: {
     extractGlobalStyles: true,
-    extractScopedStyles: true,
     exportLocalStylesExtension: "css-local",
     ignoreSSROnly: true,
     transformLocalStyles: async (css, { filePath }) => {
@@ -98,9 +97,10 @@ htmlModulesPlugin({
 
 ## Transforming Styles
 
-If you define `extractGlobalStyles: true`, then any `style` tag featuring a `scope="global"` attribute will have those styles extracted out of there and included in esbuild's CSS bundle output.
+> [!WARNING]
+> The `extractScopedStyles: true` experimental option was removed in v0.8. We recommend you use the newer `@scope` standard in a global stylesheet if you want to author "scoped" light DOM styles. 
 
-If you define `extractScopedStyles: true`, then any `style` tag featuring a `scope="tag-name-here"` attribute will have those styles extracted out, transformed so that selectors such as `:host` are replaced by the scoped tag name, and included in esbuild's CSS bundle output. This is to facilitate shadow DOM-like styling for custom elements which use light DOM only. Note that these transformations are provided by the [enhance-style-transform](https://github.com/enhance-dev/enhance-style-transform) package. [Additional documentation is available here.](https://github.com/enhance-dev/enhance-style-transform#ssr-transformations)
+If you define `extractGlobalStyles: true`, then any `style` tag featuring a `scope="global"` attribute or a `global` boolean attribute will have those styles extracted out of there and included in esbuild's CSS bundle output.
 
 If you define a `transformLocalStyles` function, then any local style tag contained within your HTML (not explicitly scoped) will have its contents transformed by the function. Above you can see this done using PostCSS, but you could use another processor such as Sass if you prefer. This is useful for style tags which get included in shadow DOM templates (and you wouldn't want to include those styles in the CSS bundle).
 

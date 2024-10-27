@@ -34,15 +34,17 @@
   }
 </style>
 
-<style scope="global">
+<style global>
   body {
     color: orange;
   }
 </style>
 
-<style scope="tag-name">
-  :host > h1 {
-    color: purple;
+<style global>
+  @scope (tag-name) {
+    > h1 {
+      color: purple;
+    }
+    > p[slot=here] { color:red; }
   }
-  :host > p::slotted([slot=here]) { color:red; }
 </style>

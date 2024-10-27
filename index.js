@@ -31,29 +31,12 @@ module.exports = (options = {}) => ({
 
       let globalCSS = ""
       if (options.experimental?.extractGlobalStyles) {
-        root.querySelectorAll("style[scope=global]").forEach((styleTag) => {
+        const globalCallback = (styleTag) => {
           globalCSS += `${styleTag.textContent}\n`
           styleTag.remove()
-        })
-      }
-
-      if (options.experimental?.extractScopedStyles) {
-        const styleTransform = await import("@enhance/enhance-style-transform")
-        const transform = styleTransform.default
-
-        root.querySelectorAll("style[scope]").forEach((styleTag) => {
-          const scope = styleTag.getAttribute("scope")
-          const styles = styleTag.textContent
-
-          styleTag.textContent = transform({
-            tagName: scope,
-            context: "markup",
-            raw: styles,
-          })
-
-          globalCSS += `${styleTag.textContent}\n`
-          styleTag.remove()
-        })
+        }
+        root.querySelectorAll("style[scope]").forEach(globalCallback)
+        root.querySelectorAll("style[global]").forEach(globalCallback)
       }
 
       const styleTags = root.getElementsByTagName("style")
