@@ -98,7 +98,7 @@ htmlModulesPlugin({
 ## Transforming Styles
 
 > [!WARNING]
-> The `extractScopedStyles: true` experimental option was removed in v0.8. We recommend you use the newer `@scope` standard in a global stylesheet if you want to author "scoped" light DOM styles. 
+> The `extractScopedStyles: true` experimental option was removed in v0.8. We recommend you use the usual CSS nesting—or soon, the newer `@scope` standard—in a global stylesheet if you want to author "scoped" light DOM styles. 
 
 If you define `extractGlobalStyles: true`, then any `style` tag featuring a `scope="global"` attribute or a `global` boolean attribute will have those styles extracted out of there and included in esbuild's CSS bundle output.
 
